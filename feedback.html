@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        .rating-btn:focus {
+            outline: none;
+        }
+    </style>
+    <title>Service Feedback Form</title>
+</head>
+
+<body class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+    
+    <!-- Logo and QR code placeholders -->
+    <div class="flex justify-between px-4 mb-2">
+        <!-- Logo placeholder -->
+        <div class="logo-placeholder">
+            <img src="https://seeklogo.com/images/L/logo-com-hr-logo-5636A4D2D5-seeklogo.com.png" alt="Logo" class="h-20">
+        </div>
+        <!-- QR code placeholder - Only change the data url in the img src to your app url to auto generate qr code -->
+        <div class="qr-placeholder">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://a.picoapps.xyz/Congress-figure" alt="QR Code" class="w-20 h-20" />
+        </div>
+    </div>
+
+    <div class="text-right text-sm mb-4 px-4">Scan QR to complete on your phone.</div>
+    <div class="relative px-4 py-10 bg-white mx-4 md:mx-0 shadow rounded-3xl sm:p-10">
+        <div class="max-w-md mx-auto">
+            <div class="text-center font-semibold text-xl mb-5">We'd love to hear your thoughts, please share your feedback on our AI assistant app!</div>
+
+            <!-- Rating bubbles 0 to 10 -->
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4 text-center mb-6">
+                <div class="flex justify-center">
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="0">0</button>
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="1">1</button>
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="2">2</button>
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="3">3</button>
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="4">4</button>
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="5">5</button>
+                </div>
+                <div class="flex justify-center">
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="6">6</button>
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="7">7</button>
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="8">8</button>
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="9">9</button>
+                    <button class="rating-btn mr-1 w-10 h-10 bg-blue-500 font-bold text-white rounded-full focus:bg-blue-700" data-rating="10">10</button>
+                </div>
+            </div>
+            
+            <div class="text-center mb-8">
+                <span class="text-sm">0 - Extremely Unlikely</span>
+                <span class="ml-4 text-sm">10 - Extremely Likely</span>
+            </div>
+            
+            <!-- Feedback form -->
+            <form id="feedback-form" novalidate="">
+                <div class="text-sm font-semibold mb-3">What feature can we add/remove to improve?</div>
+                <div>
+                    <textarea name="suggestion" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-xl w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" placeholder="We'd love to hear your suggestions." required=""></textarea>
+                </div>
+
+                <div class="mt-4 mb-3 font-semibold text-sm">Email (optional)</div>
+                <div class="mb-8">
+                    <input type="email" name="email" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-xl w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" placeholder="Someone@something.com">
+                </div>
+
+                <!-- Image upload section -->
+                <div class="mb-2 relative">
+                    <label for="imgUpload" class="cursor-pointer w-full border-2 border-dashed hover:border-blue-300 p-8 text-center text-gray-700 rounded-xl flex items-center justify-center flex-col">
+                        <div id="imgPlaceholder" class="text-sm"><i class="fas fa-image text-3xl mb-2"></i><br>Upload image</div>
+                        <img id="imgPreview" src="" alt="Uploaded Image" class="hidden w-full h-auto max-h-48 object-contain border border-gray-200 rounded-xl">
+                    </label>
+                    <input type="file" name="imgUpload" id="imgUpload" class="hidden" accept="image/*">
+                    <button type="button" id="removeImgBtn" class="hidden absolute top-0 right-0 m-2 text-red-500">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="mt-6 mb-4 flex items-center justify-center">
+                    <div id="spinner" class="w-6 h-6 border-t-2 border-b-2 border-blue-500 rounded-full hidden animate-spin"></div><br>
+                    <button type="submit" class="bg-blue-500 font-bold text-white py-2 px-5 rounded-xl">Send Feedback</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <script>
+        const ratingButtons = document.querySelectorAll(".rating-btn");
+        const feedbackForm = document.getElementById("feedback-form");
+        const imgUpload = document.getElementById("imgUpload");
+        const imgPreview = document.getElementById("imgPreview");
+        const imgPlaceholder = document.getElementById("imgPlaceholder");
+        const removeImgBtn = document.getElementById("removeImgBtn");
+        const spinner = document.getElementById("spinner");
+        let selectedRating = null;
+
+        // Handle rating button clicks
+        ratingButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                selectedRating = btn.getAttribute("data-rating");
+                ratingButtons.forEach(b => {
+                    b.classList.remove("bg-blue-700");
+                    b.removeAttribute("required");
+                });
+                btn.classList.add("bg-blue-700");
+                btn.setAttribute("required", "");
+            });
+        });
+
+        // Preview uploaded image
+        imgUpload.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imgPreview.src = e.target.result;
+                    imgPreview.classList.remove("hidden");
+                    imgPlaceholder.classList.add("hidden");
+                    removeImgBtn.classList.remove("hidden");
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imgPreview.classList.add("hidden");
+                removeImgBtn.classList.add("hidden");
+                imgPlaceholder.classList.remove("hidden");
+            }
+        });
+
+        // Remove uploaded image
+        removeImgBtn.addEventListener("click", () => {
+            imgUpload.value = "";
+            imgPreview.classList.add("hidden");
+            removeImgBtn.classList.add("hidden");
+            imgPlaceholder.classList.remove("hidden");
+        });
+
+        // Handle form submission and email the results
+        feedbackForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (selectedRating === null || !feedbackForm.checkValidity()) {
+                alert("Please fill out all required fields.");
+                return;
+            }
+
+            spinner.classList.remove("hidden");
+
+            const formData = new FormData(feedbackForm);
+            const suggestion = formData.get("suggestion");
+            const email = formData.get("email");
+            const attachedImage = formData.get("imgUpload");
+
+            const subject = `Service Feedback: Rating ${selectedRating}`;
+
+            let imgUrl = "";
+            if (attachedImage) {
+                const dataURL = await toDataURL(attachedImage);
+                imgUrl = `<img src="${dataURL}" alt="${attachedImage.name}" />`;
+            }
+            
+            // Tip: Use an online email body generator to create an email template
+            const body = `
+                Rating: ${selectedRating}<br>
+                Feature to improve: ${suggestion}<br>
+                ${email ? `Email: ${email}<br>` : ""}
+                ${attachedImage ? `Attached Image: ${imgUrl}` : ""}
+            `;
+
+            // Convert uploaded image to base64
+            async function toDataURL(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        resolve(event.target.result);
+                    };
+                    reader.onerror = (error) => {
+                        reject(error);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // Send the email
+            try {
+                const response = await fetch("https://backend.buildpicoapps.com/aero/run/self-email-api?pk=v1-Z0FBQUFBQm5SdFV2UmpxcmNGaFE3MWNfcENxdHRQZURGN0p0UV9mMVY4UklCWkVOaW8zWkhKVTlJVEszQXljSkdDdTBEdm9KbV9wYV92VDhSeEMzNTJpZFd6eHVCRnZRd3c9PQ==", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        subject,
+                        body,
+                        attachedImage: imgUrl ? imgUrl : null
+                    })
+                });
+
+                const result = await response.json();
+                spinner.classList.add("hidden");
+
+                if (result.status === "success") {
+                    alert("Thank you for your feedback!");
+                } else {
+                    console.error("Error sending feedback:", result);
+                    alert("An error occurred while sending feedback. Please try again later.");
+                }
+            } catch (error) {
+                spinner.classList.add("hidden");
+                console.error("Error sending feedback:", error);
+                alert("An error occurred while sending feedback. Please try again later.");
+            }
+        });
+    </script>
+ 
+</body></html>
