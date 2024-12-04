@@ -12,7 +12,6 @@ navigationMenu.innerHTML = `
        <li><a href="contact.html">Contact </a></li> 
         <li><a href="about.html">About</a></li> 
   </ul>
-`;
 document.body.appendChild(navigationMenu);
 
 menuButton.addEventListener("click", () => {
